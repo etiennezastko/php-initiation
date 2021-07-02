@@ -7,6 +7,7 @@ if (isset($_GET['id']) && empty($_GET['id'])) {
     $sql = 'SELECT * FROM `topic` WHERE `topic_id`=:id';
     $sql = 'SELECT * FROM topic';
     $query = $db->prepare($sql);
+    $query->bindValue(':id', $id, PDO::PARAM_STR);
     $query->execute();
     $topic = $query->fetchAll();
 } else {
