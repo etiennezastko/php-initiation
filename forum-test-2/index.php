@@ -1,34 +1,16 @@
+<?php include('header.php'); ?>
+
 <?php
-
-require_once('db-connect.php');
-$sql = 'SELECT * FROM `topic`';
-$query = $db->prepare($sql);
-$query->execute();
-$result = $query->fetchAll(PDO::FETCH_ASSOC);
+if (!empty($_SESSION['error'])) {
+    echo '<div class="alert alert-danger" role="alert">' .
+        $_SESSION['error'] . '</div>';
+    $_SESSION['error'] = '';
+} else {
+    echo '<div class="alert alert-success" role="alert">' .
+        $_SESSION['success'] . '</div>';
+    $_SESSION['success'] = '';
+}
 ?>
+<a href="form-topic.php"><button type="button" class="btn btn-outline-primary">Ajouter un sujet</button></a>
 
-
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="main.css">
-</head>
-
-<body>
-    <a href="form-topic.php">publier un nouveau topic</a>
-    <?php
-
-    foreach ($result as $topic) {
-    ?>
-        <p><?= $topic['object'] ?></p>
-    <?php
-    }
-    ?>
-</body>
-
-</html>
+<?php include('footer.php'); ?>
