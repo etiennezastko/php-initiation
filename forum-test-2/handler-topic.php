@@ -7,14 +7,9 @@ if ($_POST) {
         && isset($_POST["topic_object"]) && !empty($_POST["topic_object"])
         && isset($_POST["topic_text"]) && !empty($_POST["topic_text"])
     ) {
-        $_SESSION['success'] = 'votre message à été publié !';
-        header('location:index.php');
-
         $author = strip_tags($_POST['topic_author']);
         $object = strip_tags($_POST['topic_object']);
         $text = strip_tags($_POST['topic_text']);
-
-
         require_once("db-connect.php");
         $sql = "INSERT INTO topic (`author`, `object`, `text`) VALUES (:topic_author, :topic_object , :topic_text)";
         $query = $db->prepare($sql);
@@ -22,6 +17,18 @@ if ($_POST) {
         $query->bindValue(':topic_object', $object, PDO::PARAM_STR);
         $query->bindValue(':topic_text', $text, PDO::PARAM_STR);
         $query->execute();
+        require_once('close.php');
+        $_SESSION['success'] = 'votre message à été publié !';
+        header('location:index.php');
+
+
+
+
+
+
+
+
+
         echo 'tout est ok !';
     } else {
         $_SESSION['error'] = 'il maqnue des informations';
